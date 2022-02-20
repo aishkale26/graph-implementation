@@ -1,0 +1,89 @@
+*******************Graph by DFS and BFS*************
+import java.util.Scanner;
+
+public class Graph {
+
+		int adjMat[][],Vnodes,Vlist[];
+		Scanner in = new Scanner(System.in);
+			public Graph(int size)
+			{
+				Vnodes = size;
+				Vlist = new int[Vnodes];
+				adjMat = new int[Vnodes][Vnodes];
+				
+				for(int src = 0 ; src < Vnodes ; src++)
+				{
+					for(int dest = 0; dest<Vnodes; dest++)
+					{
+						System.out.println(" Edge cost from"+ src + "to"+ dest+":");
+						adjMat[src][dest]= in.nextInt();
+						
+					}
+				}	
+			}
+			
+			
+			void resetVisit()
+			{
+				for(int i = 0;i<Vnodes; i++)
+					Vlist[i]=0;
+			}
+			
+			void DFS(int Source)
+			{
+				Vlist[Source]=1;
+				System.out.println(Source);
+				for(int i = 0; i< Vnodes ; i++)
+				{
+					if(adjMat[Source][i]==1 && Vlist[i] != 1)
+						
+						 DFS(i);
+				}
+			}
+			
+			void BFS(int Source)
+			{
+				int Q[],front = 0, rear = -1 , e;
+				Q = new int [Vnodes];
+				Vlist[Source]=1;//marking node visited
+				Q[++rear] = Source ;//enque
+				
+				while(front <= rear){
+					e = Q[front++];//assigning first element of queue to e &  dequeue
+					System.out.println(e);
+					for(int i=0; i<Vnodes ; i++)
+					{
+						if(adjMat[e][i]==1 && Vlist[i]!=1)//checking unvisited nodes
+						{
+							Vlist[i]=1;//marking unvisited node visited
+							Q[++rear]=i;//enqueue
+						}
+						
+					}
+				}
+			}
+	
+
+}
+
+
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\main\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+import java.util.Scanner;
+
+
+public class tester {
+
+	public static void main(String[] args) {
+
+			Scanner sc = new Scanner(System.in);
+			int size = sc.nextInt();
+			Graph p = new Graph(size);
+			System.out.println(" DFS");
+			p.DFS(1);
+			p.resetVisit();
+			
+			System.out.println(" BFS");
+			p.BFS(1);
+	}
+
+}
